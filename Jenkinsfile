@@ -7,14 +7,16 @@ pipeline {
                 echo 'code quality check'
 
                 script {
-                docker.build("my-express-app")
+                    def myEnv = docker.build("my-express-app")
                 }
             }
         }
         stage('test') {
             steps {
                 script {
-                    docker.run("my-express-app", "/bin/sh", "-c", "npm install && npm test")
+                    myEnv.inside(
+                        sh "npm test"
+                    )
                 }
             }
             // post {
