@@ -5,7 +5,7 @@ pipeline {
             steps {
 
                 script {
-                    def myEnv = docker.build("my-express-app")
+                    sh 'docker build -t my-express-app .'
                 }
             }
         }
@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     myEnv.inside(
-                        sh 'npm test'
+                        sh 'docker run --rm my-express-app npm test',
                     )
                 }
             }
