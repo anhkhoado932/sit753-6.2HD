@@ -3,8 +3,6 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                // checkout scm
-                echo 'code quality check'
 
                 script {
                     def myEnv = docker.build("my-express-app")
@@ -15,7 +13,7 @@ pipeline {
             steps {
                 script {
                     myEnv.inside(
-                        sh "npm test"
+                        sh 'npm test'
                     )
                 }
             }
