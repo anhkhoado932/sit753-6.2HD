@@ -32,23 +32,23 @@ pipeline {
                 echo 'code quality check'
             }
         }
-        stage('security scan') {
-            // steps {
-            // }
-            // post {
-            //     success {
-            //         emailext body: 'security scan succeeded', 
-            //         subject: 'security scan succeeded',
-            //         to: 'dakhoa0903@gmail.com'
-            //     }
-            //     failure {
-            //         emailext body: 'security scan failed', 
-            //         subject: 'security scan failed',
-            //         to: 'dakhoa0903@gmail.com',
-            //         attachLog: true
-            //     }
-            // }
-        }
+        // stage('security scan') {
+        //     steps {
+        //     }
+        //     post {
+        //         success {
+        //             emailext body: 'security scan succeeded', 
+        //             subject: 'security scan succeeded',
+        //             to: 'dakhoa0903@gmail.com'
+        //         }
+        //         failure {
+        //             emailext body: 'security scan failed', 
+        //             subject: 'security scan failed',
+        //             to: 'dakhoa0903@gmail.com',
+        //             attachLog: true
+        //         }
+        //     }
+        // }
         // stage('deploy to staging') {
         //     steps {
         //     }
