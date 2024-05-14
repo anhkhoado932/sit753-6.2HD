@@ -17,14 +17,14 @@ pipeline {
                     docker.run("my-express-app", "/bin/sh", "-c", "npm install && npm test")
                 }
             }
-            post {
-                // failure {
-                //     emailext body: 'Test stage failed', 
-                //     subject: 'Test stage failed',
-                //     to: 'dakhoa0903@gmail.com',
-                //     attachLog: true
-                // }
-            }
+            // post {
+            //     failure {
+            //         emailext body: 'Test stage failed', 
+            //         subject: 'Test stage failed',
+            //         to: 'dakhoa0903@gmail.com',
+            //         attachLog: true
+            //     }
+            // }
 
         }
         stage('code quality check') {
@@ -49,17 +49,17 @@ pipeline {
             //     }
             // }
         }
-        stage('deploy to staging') {
-            steps {
-            }
-        }
-        stage('integration test on staging') {
-            steps {
-            }
-        }
-        stage('deploy to production') {
-            steps {
-            }
-        }
+        // stage('deploy to staging') {
+        //     steps {
+        //     }
+        // }
+        // stage('integration test on staging') {
+        //     steps {
+        //     }
+        // }
+        // stage('deploy to production') {
+        //     steps {
+        //     }
+        // }
     }
 }
