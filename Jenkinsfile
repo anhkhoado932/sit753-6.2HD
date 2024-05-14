@@ -12,7 +12,7 @@ pipeline {
         stage('test') {
             steps {
                 script {
-                    sh 'docker run --rm my-express-app npm test',
+                    sh 'docker run --rm my-express-app npm test'
                 }
             }
             // post {
