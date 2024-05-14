@@ -2,8 +2,8 @@ pipeline {
     agent any
     stages {
         stage('build') {
-            checkout scm
             steps {
+                // checkout scm
                 echo 'code quality check'
 
                 script {
