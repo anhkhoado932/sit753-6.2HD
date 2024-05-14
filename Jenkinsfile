@@ -33,8 +33,8 @@ pipeline {
             }
         }
         stage('security scan') {
-            steps {
-            }
+            // steps {
+            // }
             // post {
             //     success {
             //         emailext body: 'security scan succeeded', 
