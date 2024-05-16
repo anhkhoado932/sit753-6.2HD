@@ -6,7 +6,7 @@ const port = 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
-});
+    console.log(`App listening at http://localhost:${port}`); // eslint-disable-line no-console
+}); 
 
 module.exports = app;
