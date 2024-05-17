@@ -14,7 +14,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId:'heroku-credential',usernameVariable:'USR',passwordVariable:'PWD')])
                     {
                         echo "Docker Logging In"  
-                        bat "docker login registry.heroku.com -u ${env.USR} -p ${env.PWD}"
+                        sh "docker login registry.heroku.com -u ${env.USR} -p ${env.PWD}"
                     }
                 echo 'Pushing to Heroku'
                 sh 'docker push registry.heroku.com/my-express-app/web'
@@ -37,7 +37,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId:'heroku-credential',usernameVariable:'USR',passwordVariable:'PWD')])
                     {
                         echo "Docker Logging In"  
-                        bat "docker login registry.heroku.com -u ${env.USR} -p ${env.PWD}"
+                        sh "docker login registry.heroku.com -u ${env.USR} -p ${env.PWD}"
                     }
                 echo 'Deploying to Heroku'
                 sh 'heroku container:release web --app my-express-app'
