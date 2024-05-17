@@ -4,8 +4,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh 'docker build -t my-express-app .'
-                    sh 'docker tag my-express-app registry.heroku.com/my-express-app/web'
+                    sh 'docker build -t sit753-hd .'
+                    sh 'docker tag sit753-hd registry.heroku.com/sit753-hd/web'
                 }
             }
         }
@@ -14,34 +14,38 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId:'heroku-credential',usernameVariable:'USR',passwordVariable:'PWD')])
                     {
                         echo "Docker Logging In"  
-                        sh "docker login registry.heroku.com -u ${env.USR} -p ${env.PWD}"
+                        sh """
+                        docker login registry.heroku.com -u ${env.USR} -p ${env.PWD}
+                        docker push registry.heroku.com/sit753-hd/web
+                        """
                     }
-                echo 'Pushing to Heroku'
-                sh 'docker push registry.heroku.com/my-express-app/web'
             }
         }
         stage('Test') {
             steps {
                 script {
-                    sh 'docker run --rm my-express-app npm test'
+                    sh 'docker run --rm sit753-hd npm test'
                 }
             }
         }
         stage('Code Quality Check') {
             steps {
-                echo 'code quality check'
+                script {
+                    echo 'code quality check'
+                    sh 'docker run --rm sit753-hd npm run lint'
+                }
             }
         }
         stage('Deploy') {
             steps {
+                echo 'Deploying to Heroku'
                 withCredentials([usernamePassword(credentialsId:'heroku-credential',usernameVariable:'USR',passwordVariable:'PWD')])
                     {
-                        echo "Docker Logging In"  
-                        sh "docker login registry.heroku.com -u ${env.USR} -p ${env.PWD}"
+                        sh """
+                        docker login registry.heroku.com -u ${env.USR} -p ${env.PWD}
+                        heroku container:release web --app sit753-hd
+                        """
                     }
-                echo 'Deploying to Heroku'
-                sh 'heroku container:release web --app my-express-app'
-
             }
         }
     }
