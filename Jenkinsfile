@@ -1,63 +1,48 @@
 pipeline {
     agent any
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-
                 script {
-                    sh 'docker build -t my-express-app .'
+                    sh 'docker build -t my-express-app --no-cache .'
+                    sh 'docker tag my-express-app registry.heroku.com/my-express-app/web'
                 }
             }
         }
-        stage('test') {
+        stage('Push To Heroku') {
+            steps {
+                withCredentials([usernamePassword(credentialsId:'Heroku',usernameVariable:'USR',passwordVariable:'PWD')])
+                    {
+                        echo "Docker Logging In"  
+                        bat "docker login registry.heroku.com -u ${env.USR} -p ${env.PWD}"
+                    }
+                echo 'Pushing to Heroku'
+                sh 'docker push registry.heroku.com/my-express-app/web'
+            }
+        }
+        stage('Test') {
             steps {
                 script {
                     sh 'docker run --rm my-express-app npm test'
                 }
             }
-            // post {
-            //     failure {
-            //         emailext body: 'Test stage failed', 
-            //         subject: 'Test stage failed',
-            //         to: 'dakhoa0903@gmail.com',
-            //         attachLog: true
-            //     }
-            // }
-
         }
-        stage('code quality check') {
+        stage('Code Quality Check') {
             steps {
                 echo 'code quality check'
             }
         }
-        // stage('security scan') {
-        //     steps {
-        //     }
-        //     post {
-        //         success {
-        //             emailext body: 'security scan succeeded', 
-        //             subject: 'security scan succeeded',
-        //             to: 'dakhoa0903@gmail.com'
-        //         }
-        //         failure {
-        //             emailext body: 'security scan failed', 
-        //             subject: 'security scan failed',
-        //             to: 'dakhoa0903@gmail.com',
-        //             attachLog: true
-        //         }
-        //     }
-        // }
-        // stage('deploy to staging') {
-        //     steps {
-        //     }
-        // }
-        // stage('integration test on staging') {
-        //     steps {
-        //     }
-        // }
-        // stage('deploy to production') {
-        //     steps {
-        //     }
-        // }
+        stage('Deploy') {
+            steps {
+                withCredentials([usernamePassword(credentialsId:'Heroku',usernameVariable:'USR',passwordVariable:'PWD')])
+                    {
+                        echo "Docker Logging In"  
+                        bat "docker login registry.heroku.com -u ${env.USR} -p ${env.PWD}"
+                    }
+                echo 'Deploying to Heroku'
+                sh 'heroku container:release web --app my-express-app'
+
+            }
+        }
     }
 }
