@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "mocha ./test --exit"
+    "test": "mocha ./test --exit",
+    "lint": "eslint ."
   },
   "author": "",
   "license": "ISC",

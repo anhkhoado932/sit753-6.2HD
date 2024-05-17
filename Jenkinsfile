@@ -13,7 +13,6 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId:'heroku-credential',usernameVariable:'USR',passwordVariable:'PWD')])
                     {
-                        echo "Docker Logging In"  
                         sh """
                         docker login registry.heroku.com -u ${env.USR} -p ${env.PWD}
                         docker push registry.heroku.com/sit753-hd/web
@@ -31,14 +30,12 @@ pipeline {
         stage('Code Quality Check') {
             steps {
                 script {
-                    echo 'code quality check'
                     sh 'docker run --rm sit753-hd npm run lint'
                 }
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying to Heroku'
                 withCredentials([usernamePassword(credentialsId:'heroku-credential',usernameVariable:'USR',passwordVariable:'PWD')])
                     {
                         sh """

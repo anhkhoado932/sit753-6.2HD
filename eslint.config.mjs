@@ -17,15 +17,15 @@ export default [
             'no-console': 'error',
             
             // Code format standards
-            'semi': ['warn', 'always'],
-            'quotes': ['warn', 'single'],
-            'indent': ['warn', 4],
+            'semi': ['error', 'always'],
+            'quotes': ['error', 'single'],
+            'indent': ['error', 4],
 
             // SonarJS rules
-            'sonarjs/cognitive-complexity': 'warn',
-            'sonarjs/no-duplicate-string': 'warn',
-            'sonarjs/no-identical-functions': 'warn',
-            'sonarjs/no-inverted-boolean-check': 'warn', 
+            'sonarjs/cognitive-complexity': 'error',
+            'sonarjs/no-duplicate-string': 'error',
+            'sonarjs/no-identical-functions': 'error',
+            'sonarjs/no-inverted-boolean-check': 'error', 
         }
     },
     {
