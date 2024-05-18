@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Hello World</title>
+    <title>Note Taking Application</title>
 </head>
 <body>
-    <h1>Hello World!</h1>
+    <h1>Note Taking Application</h1>
 </body>
 </html>
+<div>
+    <input type="text" id="noteTitle" placeholder="Enter note title">
+    <textarea id="noteContent" placeholder="Enter note content"></textarea>
+    <button id="addNoteButton" onclick="addNote()">Add Note</button>
+</div>
+
+<ul id="noteList"></ul>
+
+<script src="js/script.js"></script>
