@@ -5,7 +5,8 @@ const port = 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(process.env.PORT || 3000, process.env.HOST || 'localhost', () => {
+app.listen(process.env.PORT || 3000, () => {
+    
     console.log(`App listening at http://localhost:${port}`); // eslint-disable-line no-console
 }); 
 
