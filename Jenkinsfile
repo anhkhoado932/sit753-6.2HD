@@ -1,23 +1,25 @@
 pipeline {
     agent any
+    environment {
+        HEROKU_APP_NAME = 'sit753-hd' // Must match the Heroku app name
+    }
     stages {
         stage('Build') {
             steps {
                 script {
                     sh 'docker build -t sit753-hd .'
-                    sh 'docker tag sit753-hd registry.heroku.com/sit753-hd/web'
+                    sh "docker tag sit753-hd registry.heroku.com/${HEROKU_APP_NAME}/web"
                 }
             }
         }
         stage('Push To Heroku') {
             steps {
-                withCredentials([usernamePassword(credentialsId:'heroku-credential',usernameVariable:'USR',passwordVariable:'PWD')])
-                    {
-                        sh """
-                        docker login registry.heroku.com -u ${env.USR} -p ${env.PWD}
-                        docker push registry.heroku.com/sit753-hd/web
-                        """
-                    }
+                withCredentials([usernamePassword(credentialsId:'heroku-credential',usernameVariable:'USR',passwordVariable:'PWD')]) {
+                    sh """
+                    docker login registry.heroku.com -u ${env.USR} -p ${env.PWD}
+                    docker push registry.heroku.com/${HEROKU_APP_NAME}/web
+                    """
+                }
             }
         }
         stage('Test') {
@@ -36,8 +38,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                withCredentials([usernamePassword(credentialsId:'heroku-credential',usernameVariable:'USR',passwordVariable:'PWD')])
-                    {
+                withCredentials([usernamePassword(credentialsId:'heroku-credential',usernameVariable:'USR',passwordVariable:'PWD')]) {
+                    script {
                         sh """
                         cat <<EOF > ~/.netrc
                         machine api.heroku.com
@@ -48,8 +50,9 @@ pipeline {
                           password ${env.PWD}
                         EOF
                         """
-                        sh "heroku container:release web --app sit753-hd"
+                        sh "heroku container:release web --app ${HEROKU_APP_NAME}"
                     }
+                }
             }
         }
     }
