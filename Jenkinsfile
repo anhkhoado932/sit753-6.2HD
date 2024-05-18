@@ -47,8 +47,8 @@ pipeline {
                           login ${env.USR}
                           password ${env.PWD}
                         EOF
-                        heroku container:release web --app sit753-hd
                         """
+                        sh "heroku container:release web --app sit753-hd"
                     }
             }
         }
