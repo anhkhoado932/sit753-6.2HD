@@ -2,17 +2,25 @@
 <html lang="en">
 <head>
     <title>Note Taking Application</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Note Taking Application</h1>
+    <div class="container">
+        <h1>Note Taking Application</h1>
+        <ul id="noteList"></ul>
+        <div class="form-group">
+            <input type="text" class="form-control" id="noteTitle" placeholder="Enter note title">
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" id="noteContent" placeholder="Enter note content"></textarea>
+        </div>
+        <button class="btn btn-primary" id="addNoteButton" onclick="addNote()">Add Note</button>
+    </div>
+
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
-<div>
-    <input type="text" id="noteTitle" placeholder="Enter note title">
-    <textarea id="noteContent" placeholder="Enter note content"></textarea>
-    <button id="addNoteButton" onclick="addNote()">Add Note</button>
-</div>
-
-<ul id="noteList"></ul>
-
-<script src="js/script.js"></script>
