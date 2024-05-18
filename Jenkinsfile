@@ -39,7 +39,14 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId:'heroku-credential',usernameVariable:'USR',passwordVariable:'PWD')])
                     {
                         sh """
-                        docker login registry.heroku.com -u ${env.USR} -p ${env.PWD}
+                        cat <<EOF > ~/.netrc
+                        machine api.heroku.com
+                          login ${env.USR}
+                          password ${env.PWD}
+                        machine git.heroku.com
+                          login ${env.USR}
+                          password ${env.PWD}
+                        EOF
                         heroku container:release web --app sit753-hd
                         """
                     }
